@@ -18,7 +18,7 @@ export interface FormField {
   type: FieldType;
   label: string;
   placeholder?: string;
-  options?: string[] | Record<string, string[]>; //"Record" for nested options
+  options?: string[] | Record<string, string[]>; 
   validation?: ValidationRules;
   visibilityConditions?: VisibilityConditions;
 }
