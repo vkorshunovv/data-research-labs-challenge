@@ -1,7 +1,14 @@
 import "./App.css";
+import DynamicForm from "./components/DynamicForm";
+import JSONPreview from "./components/JSONPreview";
 
 function App() {
-  return <></>;
+  return (
+    <>
+      <DynamicForm />
+      <JSONPreview />
+    </>
+  );
 }
 
 export default App;

@@ -1,0 +1,48 @@
+{
+  "fields": [
+    {
+      "name": "name",
+      "type": "text",
+      "label": "Name",
+      "placeholder": "Enter your name",
+      "validation": {
+        "required": true,
+        "minLength": 3
+      }
+    },
+    {
+      "name": "age",
+      "type": "number",
+      "label": "Age",
+      "validation": {
+        "required": true,
+        "min": 18
+      }
+    },
+    {
+      "name": "country",
+      "type": "select",
+      "label": "Country",
+      "options": ["USA", "Canada", "Australia"],
+      "validation": {
+        "required": true
+      }
+    },
+    {
+      "name": "city",
+      "type": "select",
+      "label": "City",
+      "options": {
+        "USA": ["New York", "Los Angeles"],
+        "Canada": ["Toronto", "Vancouver"],
+        "Australia": ["Sydney", "Melbourne"]
+      },
+      "visibilityConditions": {
+        "country": ["USA", "Canada", "Australia"]
+      },
+      "validation": {
+        "required": true
+      }
+    }
+  ]
+}
