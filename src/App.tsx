@@ -4,6 +4,8 @@ import DynamicForm from "./components/DynamicForm";
 import JSONPreview from "./components/JSONPreview";
 
 function App() {
+  const [name, setName] = useState("");
+  const [age, setAge] = useState("");
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
 
@@ -15,6 +17,10 @@ function App() {
   return (
     <>
       <DynamicForm
+        name={name}
+        setName={setName}
+        age={age}
+        setAge={setAge}
         selectedCountry={selectedCountry}
         setSelectedCountry={setSelectedCountry}
         selectedCity={selectedCity}
