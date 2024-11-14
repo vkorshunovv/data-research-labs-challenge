@@ -18,6 +18,24 @@ export interface DynamicFormProps {
   setSelectedCity: Dispatch<SetStateAction<string>>;
 }
 
+export interface FormFieldProps {
+  field: any;
+  name: string;
+  age: string;
+  selectedCountry?: string;
+  selectedCity?: string;
+  onChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => void;
+  onBlur: (e: React.FocusEvent<HTMLInputElement | HTMLSelectElement>) => void;
+  error: string;
+}
+
+export interface ButtonProps {
+  title: string;
+  handleClick: React.MouseEventHandler<HTMLButtonElement>;
+}
+
 export interface JSONPreviewProps {
   name: string;
   age: string;
