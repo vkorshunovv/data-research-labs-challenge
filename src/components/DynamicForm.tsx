@@ -19,7 +19,7 @@ const DynamicForm = ({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [savedData, setSavedData] = useState<FormData | null>(null);
 
-  // Retrieve input data from localStorage or set to default
+  // Retrieve input data from localStorage or set to default, if no data exists yet
   useEffect(() => {
     const localStorageData = JSON.parse(
       localStorage.getItem("formData") || "{}"
@@ -39,7 +39,7 @@ const DynamicForm = ({
     localStorage.setItem("formData", JSON.stringify(formData));
   }, [name, age, selectedCountry, selectedCity]);
 
-  // Function to validate individual fields
+  // Function to validate individual fields and provide error messages
   const validateField = (name: string, value: string) => {
     const field = formSchema.fields.find((f) => f.name === name);
     if (!field) return;
@@ -123,6 +123,8 @@ const DynamicForm = ({
       setSelectedCountry(savedData.selectedCountry);
       setSelectedCity(savedData.selectedCity);
     }
+
+    setErrors({});
   };
 
   return (

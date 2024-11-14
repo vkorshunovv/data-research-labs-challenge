@@ -11,6 +11,7 @@ const FormField = ({
   error,
 }: FormFieldProps) => {
   return (
+    //render different form fields depending on "field.type" or specific conditions
     <div className="flex flex-col gap-y-2">
       {field.type === "select" && field.name === "country" && (
         <div className="mt-5 gap-y-4">
@@ -61,7 +62,7 @@ const FormField = ({
                     required={field.validation?.required}
                     className="box-border block w-full rounded-md border-0 p-2.5 px-0.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
                   >
-                    {/* Check if "options" is an Object */}
+                    {/* Check if "options" is an Object to find nested arrays */}
                     {selectedCountry &&
                       typeof field.options === "object" &&
                       (field.options[selectedCountry] as string[])?.map(
