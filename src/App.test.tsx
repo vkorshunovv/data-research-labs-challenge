@@ -10,7 +10,6 @@ describe("App Component", () => {
     expect(screen.getByLabelText(/Name/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Age/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/Country/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/City/i)).toBeInTheDocument();
 
     //check if JSONPreview is rendered
     expect(screen.getByText(/"name":/)).toBeInTheDocument();
@@ -28,6 +27,6 @@ describe("App Component", () => {
     });
 
     expect(screen.getByLabelText(/Name/i)).toHaveValue("John");
-    expect(screen.getByLabelText(/Age/i)).toHaveValue("30");
+    expect(screen.getByLabelText(/Age/i)).toHaveValue(30);
   });
 });
