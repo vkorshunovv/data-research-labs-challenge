@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import schema from "../utils/schema.json";
 import { FormSchema } from "../types/schemaTypes";
 import { DynamicFormProps } from "../types/types";
@@ -14,8 +14,27 @@ const DynamicForm = ({
   setSelectedCity,
 }: DynamicFormProps) => {
   const formSchema = schema as FormSchema;
-
   const [errors, setErrors] = useState<Record<string, string>>({});
+
+  // Retrieve input data from localStorage or set default
+  useEffect(() => {
+    const localStorageData = JSON.parse(
+      localStorage.getItem("formData") || "{}"
+    );
+
+    if (localStorageData.name) setName(localStorageData.name);
+    if (localStorageData.age) setAge(localStorageData.age);
+    if (localStorageData.selectedCountry)
+      setSelectedCountry(localStorageData.selectedCountry);
+    if (localStorageData.selectedCity)
+      setSelectedCity(localStorageData.selectedCity);
+  }, []);
+
+  // Update localStorage on every input change
+  useEffect(() => {
+    const formData = { name, age, selectedCountry, selectedCity };
+    localStorage.setItem("formData", JSON.stringify(formData));
+  }, [name, age, selectedCountry, selectedCity]);
 
   // Function to validate individual fields
   const validateField = (name: string, value: string) => {
@@ -45,10 +64,7 @@ const DynamicForm = ({
         name
       ] = `${field.label} cannot exceed ${field.validation.maxLength} characters.`;
     }
-    if (
-      field.validation?.min &&
-      Number(value) < field.validation.min
-    ) {
+    if (field.validation?.min && Number(value) < field.validation.min) {
       newErrors[
         name
       ] = `${field.label} must be at least ${field.validation.min}.`;
@@ -75,7 +91,7 @@ const DynamicForm = ({
   };
 
   return (
-    <div className="bg-red-100 h-screen flex flex-col justify-center items-center border">
+    <div className="bg-red-100 h-screen flex flex-col justify-center items-center">
       <form action="">
         {formSchema &&
           formSchema.fields.length > 0 &&

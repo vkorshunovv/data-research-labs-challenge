@@ -10,9 +10,11 @@ function App() {
   const [selectedCity, setSelectedCity] = useState("");
 
   useEffect(() => {
+    console.log(name);
+    console.log(age);
     console.log(selectedCountry);
     console.log(selectedCity);
-  }, [selectedCountry, selectedCity]);
+  }, [name, age, selectedCountry, selectedCity]);
 
   return (
     <>
