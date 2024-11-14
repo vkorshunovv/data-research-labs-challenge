@@ -1,6 +1,6 @@
 # data-research-labs-challenge
 
-This project is a Developer Challenge solution in a React app using Tailwind CSS and TypeScript. The form is built to render fields dynamically based on JSON configuration, handle dependent fields and conditional visibility, and perform validation. It also features persistent storage using `localStorage` to retain user data across sessions, along with options to clear and restore form state
+This project is a Developer Challenge solution in a React app using Tailwind CSS and TypeScript. The form dynamically renders fields based on JSON configuration, handle dependent fields and conditional visibility, and perform validation. It also features persistent storage using `localStorage` to retain user data across sessions, along with options to clear and restore form state
 
 ## Features
 
@@ -50,16 +50,16 @@ To set up the project locally:
    Add the paths to all of your template files in your tailwind.config.js file.
 
    ```bash
-   export default {
-   content: [
-   "./index.html",
-   "./src/**/\*.{js,ts,jsx,tsx}",
-   ],
-   theme: {
-   extend: {},
-   },
-   plugins: [],
-   }
+    export default {
+    content: [
+      "./index.html",
+      "./src/**/*.{js,ts,jsx,tsx}",
+    ],
+    theme: {
+      extend: {},
+    },
+    plugins: [],
+  };
 
    ```
 
