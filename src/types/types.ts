@@ -17,3 +17,10 @@ export interface DynamicFormProps {
   selectedCity: string;
   setSelectedCity: Dispatch<SetStateAction<string>>;
 }
+
+export interface JSONPreviewProps {
+  name: string;
+  age: string;
+  selectedCountry: string;
+  selectedCity: string;
+}

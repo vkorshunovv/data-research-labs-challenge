@@ -17,7 +17,7 @@ function App() {
   }, [name, age, selectedCountry, selectedCity]);
 
   return (
-    <>
+    <div className="flex flex-col min-h-screen h-screen min-w-screen">
       <DynamicForm
         name={name}
         setName={setName}
@@ -28,8 +28,13 @@ function App() {
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
       />
-      <JSONPreview />
-    </>
+      <JSONPreview
+        name={name}
+        age={age}
+        selectedCountry={selectedCountry}
+        selectedCity={selectedCity}
+      />
+    </div>
   );
 }
 

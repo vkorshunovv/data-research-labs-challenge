@@ -18,7 +18,7 @@ export interface FormField {
   type: FieldType;
   label: string;
   placeholder?: string;
-  options?: string[] | any; //TODO add appropriate type
+  options?: string[] | any; //TODO add appropriate type instead of any
   validation?: ValidationRules;
   visibilityConditions?: VisibilityConditions;
 }
