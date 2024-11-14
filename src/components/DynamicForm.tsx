@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import schema from "../utils/schema.json";
 import { FormSchema } from "../types/schemaTypes";
-import { DynamicFormProps } from "../types/types";
+import { DynamicFormProps, FormData } from "../types/types";
 
 const DynamicForm = ({
   name,
@@ -15,6 +15,7 @@ const DynamicForm = ({
 }: DynamicFormProps) => {
   const formSchema = schema as FormSchema;
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [savedData, setSavedData] = useState<FormData | null>(null);
 
   // Retrieve input data from localStorage or set default
   useEffect(() => {
@@ -90,6 +91,33 @@ const DynamicForm = ({
     }));
   };
 
+  const handleFormClear = (e: FormEvent) => {
+    e.preventDefault();
+
+    // Save current data to be able to restore it
+    const savedLocalStorageData = JSON.parse(
+      localStorage.getItem("formData") || "{}"
+    );
+    setSavedData(savedLocalStorageData);
+    console.log("savedData", savedLocalStorageData);
+
+    setName("");
+    setAge("");
+    setSelectedCountry("");
+    setSelectedCity("");
+  };
+
+  const handleRestoreData = (e: FormEvent) => {
+    e.preventDefault();
+
+    if (savedData) {
+      setName(savedData.name);
+      setAge(savedData.age);
+      setSelectedCountry(savedData.selectedCountry);
+      setSelectedCity(savedData.selectedCity);
+    }
+  };
+
   return (
     <div className="bg-red-100 h-screen flex flex-col justify-center items-center">
       <form action="">
@@ -103,6 +131,9 @@ const DynamicForm = ({
                   <div className="p-2">
                     <label>
                       {field.label}
+                      <span className="w-2 text-red-400">
+                        {field.validation?.required && "*"}
+                      </span>
                       <select
                         name={field.name}
                         onChange={(e) => {
@@ -139,6 +170,9 @@ const DynamicForm = ({
                     <div className="p-2">
                       <label>
                         {field.label}
+                        <span className="w-2 text-red-400">
+                          {field.validation?.required && "*"}
+                        </span>
                         <select
                           name={field.name}
                           onChange={(e) => {
@@ -170,6 +204,9 @@ const DynamicForm = ({
                   <div>
                     <label htmlFor={field.name}>
                       {field.label}
+                      <span className="w-2 text-red-400">
+                        {field.validation?.required && "*"}
+                      </span>
                       <input
                         className="p-2 m-2"
                         type={field.type}
@@ -210,6 +247,22 @@ const DynamicForm = ({
               )}
             </div>
           ))}
+        <div className="flex m-2 gap-x-3">
+          <button
+            className="border p-2 rounded border-slate-700"
+            type="button"
+            onClick={(e) => handleFormClear(e)}
+          >
+            Clear Form
+          </button>
+          <button
+            className="border p-2 rounded border-slate-700"
+            type="button"
+            onClick={(e) => handleRestoreData(e)}
+          >
+            Restore Saved State
+          </button>
+        </div>
       </form>
     </div>
   );

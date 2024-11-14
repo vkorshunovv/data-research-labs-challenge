@@ -1,5 +1,12 @@
 import { Dispatch, SetStateAction } from "react";
 
+export interface FormData {
+  name: string;
+  age: string;
+  selectedCountry: string;
+  selectedCity: string;
+}
+
 export interface DynamicFormProps {
   name: string;
   setName: Dispatch<SetStateAction<string>>;
