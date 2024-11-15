@@ -80,6 +80,7 @@ To set up the project locally:
 
    ```
 
+
 ** `Tip: After setting up Tailwind, you may need to restart the development server for the styles to load properly. Enjoy :)` **
 
 # data-research-labs-challenge

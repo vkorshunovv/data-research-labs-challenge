@@ -16,6 +16,7 @@ export interface DynamicFormProps {
   setSelectedCountry: Dispatch<SetStateAction<string>>;
   selectedCity: string;
   setSelectedCity: Dispatch<SetStateAction<string>>;
+  setErrors?: React.Dispatch<React.SetStateAction<any>>;
 }
 
 export interface FormFieldProps {

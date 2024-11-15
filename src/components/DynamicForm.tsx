@@ -19,18 +19,18 @@ const DynamicForm = ({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [savedData, setSavedData] = useState<FormData | null>(null);
 
-  // Retrieve input data from localStorage or set to default, if no data exists yet
+  // Retrieve input data from localStorage
   useEffect(() => {
-    const localStorageData = JSON.parse(
-      localStorage.getItem("formData") || "{}"
-    );
-
-    if (localStorageData.name) setName(localStorageData.name);
-    if (localStorageData.age) setAge(localStorageData.age);
-    if (localStorageData.selectedCountry)
-      setSelectedCountry(localStorageData.selectedCountry);
-    if (localStorageData.selectedCity)
-      setSelectedCity(localStorageData.selectedCity);
+    const storedData = localStorage.getItem("formData");
+    if (storedData) {
+      const localStorageData = JSON.parse(storedData);
+      if (localStorageData.name) setName(localStorageData.name);
+      if (localStorageData.age) setAge(localStorageData.age);
+      if (localStorageData.selectedCountry)
+        setSelectedCountry(localStorageData.selectedCountry);
+      if (localStorageData.selectedCity)
+        setSelectedCity(localStorageData.selectedCity);
+    }
   }, []);
 
   // Update localStorage on every input change

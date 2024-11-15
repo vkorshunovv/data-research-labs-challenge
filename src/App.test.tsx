@@ -29,4 +29,24 @@ describe("App Component", () => {
     expect(screen.getByLabelText(/Name/i)).toHaveValue("John");
     expect(screen.getByLabelText(/Age/i)).toHaveValue(30);
   });
+
+  test("can select country and see corresponding city options", () => {
+    render(<App />);
+
+    fireEvent.change(screen.getByLabelText(/Country/i), {
+      target: { value: "USA" },
+    });
+
+    const citySelect = screen.getByLabelText(/City/i);
+    expect(citySelect).toBeInTheDocument();
+
+    expect(screen.getByText(/New York/i)).toBeInTheDocument();
+    expect(screen.getByText(/Los Angeles/i)).toBeInTheDocument();
+
+    fireEvent.change(citySelect, {
+      target: { value: "New York" },
+    });
+
+    expect(citySelect).toHaveValue("New York");
+  });
 });
