@@ -82,12 +82,13 @@ To set up the project locally:
 
 ** `Tip: After setting up Tailwind, you may need to restart the development server for the styles to load properly. Enjoy :)` **
 
-## Set up Jest For Testing
+## Run Tests
 
 Ensure the following are installed on your system:
-
+```bash
 Node.js (v16 or higher recommended)
 npm or yarn
+```
 
 1. **Install Jest**:
 
@@ -124,7 +125,7 @@ npm or yarn
 
    ```
 
-4. **Create fileMock.js in src/test/**mocks** folder**:
+4. **Create fileMock.js in `src/test/__mocks__` folder**:
 
    ```bash
    module.exports = {
@@ -151,10 +152,10 @@ npm or yarn
 
    ```
 
-7. **Start your local development server**:
+7. **Run tests**:
 
    ```bash
-   npm run dev
+   npm run test
 
    ```
 
