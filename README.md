@@ -80,7 +80,82 @@ To set up the project locally:
 
    ```
 
-
 ** `Tip: After setting up Tailwind, you may need to restart the development server for the styles to load properly. Enjoy :)` **
+
+## Set up Jest For Testing
+
+Ensure the following are installed on your system:
+
+Node.js (v16 or higher recommended)
+npm or yarn
+
+1. **Install Jest**:
+
+   ```bash
+   npm install --save-dev jest
+
+   ```
+
+2. **Setup running environment**:
+
+   ```bash
+   npm install -D @testing-library/react ts-jest @types/jest ts-node @testing-library/jest-dom jest-environment-jsdom @testing-library/user-event identity-obj-proxy --save-dev
+
+   ```
+
+3. **Create a jest.config.js file in the root with the following code**:
+
+   ```bash
+   export default {
+      preset: 'ts-jest',
+      testEnvironment: 'jest-environment-jsdom',
+      transform: {
+         "^.+\\.tsx?$": "ts-jest"
+      },
+      globals: {
+         'ts-jest': {
+            tsconfig: 'tsconfig.app.json'
+         }
+      },
+      moduleNameMapper: {
+         '\\.(gif|ttf|eot|svg|png)$': '<rootDir>/test/__ mocks __/fileMock.js',
+      },
+   };
+
+   ```
+
+4. **Create fileMock.js in src/test/**mocks** folder**:
+
+   ```bash
+   module.exports = {
+    __esModule: true,
+    default: 'test-file-stub',
+   };
+
+   ```
+
+5. **Update package.json**:
+   Add the following code line to "scripts":
+
+   ```bash
+    "test": "jest --coverage"
+
+   ```
+
+6. **Update tsconfig.app.json**:
+   Add the following code to compilerOptions:
+
+   ```bash
+   "esModuleInterop": true,
+   "resolveJsonModule": true,
+
+   ```
+
+7. **Start your local development server**:
+
+   ```bash
+   npm run dev
+
+   ```
 
 # data-research-labs-challenge
