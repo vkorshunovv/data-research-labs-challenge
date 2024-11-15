@@ -82,13 +82,13 @@ To set up the project locally:
 
 ** `Tip: After setting up Tailwind, you may need to restart the development server for the styles to load properly. Enjoy :)` **
 
-## Run Tests
+## Tests
 
 Ensure the following are installed on your system:
-```bash
-Node.js (v16 or higher recommended)
-npm or yarn
-```
+   ```bash
+   Node.js (v16 or higher recommended)
+   npm or yarn
+   ```
 
 1. **Install Jest**:
 
