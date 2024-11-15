@@ -59,11 +59,11 @@ To set up the project locally:
       extend: {},
     },
     plugins: [],
-  };
+   };
 
    ```
 
-6. **Configure Taiwind CSS**:
+6. **Add directives to your CSS**:
    Add the @tailwind directives for each of Tailwind’s layers to your ./src/index.css file.
 
    ```bash
@@ -77,6 +77,9 @@ To set up the project locally:
 
    ```bash
    npm run dev
+
    ```
+
+** `Tip: After setting up Tailwind, you may need to restart the development server for the styles to load properly. Enjoy :)` **
 
 # data-research-labs-challenge
