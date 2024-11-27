@@ -145,20 +145,7 @@ const DynamicForm = ({
                       [field.name]: e.target.value,
                     }));
                   }}
-                  // onBlur={() =>
-                  //   validateField(
-                  //     field.name,
-                  //     field.name === "country"
-                  //       ? selectedCountry
-                  //       : field.name === "city"
-                  //       ? selectedCity
-                  //       : field.name === "name"
-                  //       ? name
-                  //       : field.name === "age"
-                  //       ? age
-                  //       : ""
-                  //   )
-                  // }
+                  onBlur={() => validateField(field.name, data[field.name])}
                   data={data}
                   error={errors[field.name] || ""}
                 />

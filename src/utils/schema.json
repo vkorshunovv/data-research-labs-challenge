@@ -11,6 +11,16 @@
       }
     },
     {
+      "name": "friend",
+      "type": "text",
+      "label": "Friend",
+      "placeholder": "Enter your friend's name",
+      "validation": {
+        "required": true,
+        "minLength": 4
+      }
+    },
+    {
       "name": "age",
       "type": "number",
       "label": "Age",
