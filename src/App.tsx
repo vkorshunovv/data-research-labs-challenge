@@ -9,8 +9,11 @@ function App() {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
 
-  //save all json fields in one state
-  const [data, setData] = useState({});
+  //save all values in one object
+  const [data, setData] = useState(() => {
+    const storedData = localStorage.getItem("formData");
+    return storedData ? JSON.parse(storedData) : {}; 
+  });
 
   return (
     <div className="flex flex-col min-h-screen h-screen min-w-screen">
@@ -27,9 +30,7 @@ function App() {
         data={data}
         setData={setData}
       />
-      <JSONPreview
-        data={data}
-      />
+      <JSONPreview data={data} />
     </div>
   );
 }

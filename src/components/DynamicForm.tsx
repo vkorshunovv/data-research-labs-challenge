@@ -6,13 +6,9 @@ import Button from "./Button";
 import FormField from "./FormField";
 
 const DynamicForm = ({
-  name,
   setName,
-  age,
   setAge,
-  selectedCountry,
   setSelectedCountry,
-  selectedCity,
   setSelectedCity,
   data,
   setData,
@@ -21,25 +17,20 @@ const DynamicForm = ({
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [savedData, setSavedData] = useState<FormData | null>(null);
 
-  // // Retrieve input data from localStorage
-  // useEffect(() => {
-  //   const storedData = localStorage.getItem("formData");
-  //   if (storedData) {
-  //     const localStorageData = JSON.parse(storedData);
-  //     if (localStorageData.name) setName(localStorageData.name);
-  //     if (localStorageData.age) setAge(localStorageData.age);
-  //     if (localStorageData.selectedCountry)
-  //       setSelectedCountry(localStorageData.selectedCountry);
-  //     if (localStorageData.selectedCity)
-  //       setSelectedCity(localStorageData.selectedCity);
-  //   }
-  // }, []);
+  // Retrieve input data from localStorage
+  useEffect(() => {
+    const storedData = localStorage.getItem("formData");
+    if (storedData) {
+      const localStorageData = JSON.parse(storedData);
+      setData(localStorageData);
+      console.log("Local data", localStorageData);
+    }
+  }, []);
 
-  // // Update localStorage on every input change
-  // useEffect(() => {
-  //   const formData = { name, age, selectedCountry, selectedCity };
-  //   localStorage.setItem("formData", JSON.stringify(formData));
-  // }, [name, age, selectedCountry, selectedCity]);
+  // Update localStorage on every input change
+  useEffect(() => {
+    localStorage.setItem("formData", JSON.stringify(data));
+  }, [data]);
 
   // Function to validate individual fields and provide error messages
   const validateField = (name: string, value: string) => {
