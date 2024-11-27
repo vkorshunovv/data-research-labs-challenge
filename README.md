@@ -2,6 +2,8 @@
 
 This project is a Developer Challenge solution in a React app using Tailwind CSS and TypeScript. The form dynamically renders fields based on JSON configuration, handle dependent fields and conditional visibility, and perform validation. It also features persistent storage using `localStorage` to retain user data across sessions, along with options to clear and restore form state
 
+![App Overview](https://github.com/vkorshunovv/data-research-labs-challenge/blob/main/src/assets/app_overview.png?raw=true)
+
 ## Features
 
 - **Dynamic Form Generation**: Renders form fields dynamically based on a JSON schema. Each field is configured by its type, label, placeholder, and options (for select fields).
