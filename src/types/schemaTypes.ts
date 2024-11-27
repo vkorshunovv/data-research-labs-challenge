@@ -1,4 +1,4 @@
-export type FieldType = "text" | "number" | "select";
+export type FieldType = "text" | "number" | "select" | "checkbox";
 
 export interface ValidationRules {
   required?: boolean;

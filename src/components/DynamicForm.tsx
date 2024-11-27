@@ -14,30 +14,32 @@ const DynamicForm = ({
   setSelectedCountry,
   selectedCity,
   setSelectedCity,
-}: DynamicFormProps) => {
+  data,
+  setData,
+}: any) => {
   const formSchema = schema as FormSchema;
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [savedData, setSavedData] = useState<FormData | null>(null);
 
-  // Retrieve input data from localStorage
-  useEffect(() => {
-    const storedData = localStorage.getItem("formData");
-    if (storedData) {
-      const localStorageData = JSON.parse(storedData);
-      if (localStorageData.name) setName(localStorageData.name);
-      if (localStorageData.age) setAge(localStorageData.age);
-      if (localStorageData.selectedCountry)
-        setSelectedCountry(localStorageData.selectedCountry);
-      if (localStorageData.selectedCity)
-        setSelectedCity(localStorageData.selectedCity);
-    }
-  }, []);
+  // // Retrieve input data from localStorage
+  // useEffect(() => {
+  //   const storedData = localStorage.getItem("formData");
+  //   if (storedData) {
+  //     const localStorageData = JSON.parse(storedData);
+  //     if (localStorageData.name) setName(localStorageData.name);
+  //     if (localStorageData.age) setAge(localStorageData.age);
+  //     if (localStorageData.selectedCountry)
+  //       setSelectedCountry(localStorageData.selectedCountry);
+  //     if (localStorageData.selectedCity)
+  //       setSelectedCity(localStorageData.selectedCity);
+  //   }
+  // }, []);
 
-  // Update localStorage on every input change
-  useEffect(() => {
-    const formData = { name, age, selectedCountry, selectedCity };
-    localStorage.setItem("formData", JSON.stringify(formData));
-  }, [name, age, selectedCountry, selectedCity]);
+  // // Update localStorage on every input change
+  // useEffect(() => {
+  //   const formData = { name, age, selectedCountry, selectedCity };
+  //   localStorage.setItem("formData", JSON.stringify(formData));
+  // }, [name, age, selectedCountry, selectedCity]);
 
   // Function to validate individual fields and provide error messages
   const validateField = (name: string, value: string) => {
@@ -137,40 +139,36 @@ const DynamicForm = ({
               <div key={field.name}>
                 <FormField
                   field={field}
-                  name={name}
-                  age={age}
-                  selectedCountry={selectedCountry}
-                  selectedCity={selectedCity}
-                  onChange={(e) => {
-                    if (field.name === "name") setName(e.target.value);
-                    if (field.name === "age") setAge(e.target.value);
-                    if (field.name === "country")
-                      setSelectedCountry(e.target.value);
-                    if (field.name === "city") setSelectedCity(e.target.value);
+                  onChange={(e: any) => {
+                    setData((prevData: any) => ({
+                      ...prevData,
+                      [field.name]: e.target.value,
+                    }));
                   }}
-                  onBlur={() =>
-                    validateField(
-                      field.name,
-                      field.name === "country"
-                        ? selectedCountry
-                        : field.name === "city"
-                        ? selectedCity
-                        : field.name === "name"
-                        ? name
-                        : field.name === "age"
-                        ? age
-                        : ""
-                    )
-                  }
+                  // onBlur={() =>
+                  //   validateField(
+                  //     field.name,
+                  //     field.name === "country"
+                  //       ? selectedCountry
+                  //       : field.name === "city"
+                  //       ? selectedCity
+                  //       : field.name === "name"
+                  //       ? name
+                  //       : field.name === "age"
+                  //       ? age
+                  //       : ""
+                  //   )
+                  // }
+                  data={data}
                   error={errors[field.name] || ""}
                 />
               </div>
             ))}
         </div>
-        <div className="pb-6 flex items-center justify-between gap-x-6">
+        {/* <div className="pb-6 flex items-center justify-between gap-x-6">
           <Button title="Clear Form" handleClick={handleFormClear} />
           <Button title="Restore Saved State" handleClick={handleRestoreData} />
-        </div>
+        </div> */}
       </form>
     </div>
   );

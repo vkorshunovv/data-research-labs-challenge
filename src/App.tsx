@@ -9,6 +9,9 @@ function App() {
   const [selectedCountry, setSelectedCountry] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
 
+  //save all json fields in one state
+  const [data, setData] = useState({});
+
   return (
     <div className="flex flex-col min-h-screen h-screen min-w-screen">
       <DynamicForm
@@ -20,12 +23,12 @@ function App() {
         setSelectedCountry={setSelectedCountry}
         selectedCity={selectedCity}
         setSelectedCity={setSelectedCity}
+        //pass fields as props
+        data={data}
+        setData={setData}
       />
       <JSONPreview
-        name={name}
-        age={age}
-        selectedCountry={selectedCountry}
-        selectedCity={selectedCity}
+        data={data}
       />
     </div>
   );
