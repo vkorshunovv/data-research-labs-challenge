@@ -3,7 +3,7 @@ import { JSONPreviewProps } from "../types/types";
 const JSONPreview = ({ data }: JSONPreviewProps) => {
   return (
     //TODO set fixed list order
-    <div className="bg-slate-100 min-h-min h-1/2 flex flex-col justify-center items-center px-4">
+    <div className="w-full flex flex-col justify-center items-center p-4 border-t">
       <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   );

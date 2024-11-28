@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState, ChangeEvent } from "react";
 import schema from "../utils/schema.json";
 import { FormSchema } from "../types/schemaTypes";
 import { DynamicFormProps, FormData } from "../types/types";
@@ -10,7 +10,7 @@ const DynamicForm = ({ data, setData }: DynamicFormProps) => {
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [savedData, setSavedData] = useState<FormData | null>(null);
 
-  // Retrieve input data from localStorage
+  // retrieve input data from localStorage
   useEffect(() => {
     const storedData = localStorage.getItem("formData");
     if (storedData) {
@@ -19,12 +19,12 @@ const DynamicForm = ({ data, setData }: DynamicFormProps) => {
     }
   }, []);
 
-  // Update localStorage on every input change
+  // update localStorage on every input change
   useEffect(() => {
     localStorage.setItem("formData", JSON.stringify(data));
   }, [data]);
 
-  // Function to validate individual fields and provide error messages
+  // function to validate individual fields and provide error messages
   const validateField = (name: string, value: string) => {
     const field = formSchema.fields.find((f) => f.name === name);
     if (!field) return;
@@ -104,8 +104,32 @@ const DynamicForm = ({ data, setData }: DynamicFormProps) => {
     setErrors({});
   };
 
+  const handleOnChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setData((prevData: any) => {
+      const updatedData = {
+        ...prevData,
+        [name]: value,
+      };
+
+      // reset dependent fields if a parent field changes
+      formSchema.fields.forEach((field) => {
+        if (
+          field.visibilityConditions &&
+          Object.keys(field.visibilityConditions).includes(name)
+        ) {
+          updatedData[field.name] = ""; // reset the dependent field
+        }
+      });
+
+      return updatedData;
+    });
+  };
+
   return (
-    <div className=" min-h-min h-1/2 flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center pb-8">
       <form>
         <div className="pb-12">
           {formSchema &&
@@ -113,19 +137,16 @@ const DynamicForm = ({ data, setData }: DynamicFormProps) => {
             formSchema.fields.map((field) => {
               const isVisible =
                 !field.visibilityConditions || // always visible if no conditions
-                Object.keys(field.visibilityConditions).every((key) => // visible if associated option was selected previously
-                  field.visibilityConditions![key].includes(data[key])
+                Object.keys(field.visibilityConditions).every(
+                  (
+                    key // visible if associated option was selected previously
+                  ) => field.visibilityConditions![key].includes(data[key])
                 );
               return isVisible ? (
                 <div key={field.name}>
                   <FormField
                     field={field}
-                    onChange={(e: any) => {
-                      setData((prevData: any) => ({
-                        ...prevData,
-                        [field.name]: e.target.value,
-                      }));
-                    }}
+                    onChange={(e) => handleOnChange(e)}
                     onBlur={() => validateField(field.name, data[field.name])}
                     data={data}
                     error={errors[field.name] || ""}

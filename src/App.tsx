@@ -11,7 +11,7 @@ function App() {
   });
 
   return (
-    <div className="flex flex-col min-h-screen h-screen min-w-screen">
+    <div className="flex flex-col items-center min-h-screen mx-auto max-w-screen overflow-hidden pt-8">
       <DynamicForm data={data} setData={setData} />
       <JSONPreview data={data} />
     </div>

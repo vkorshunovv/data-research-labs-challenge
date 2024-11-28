@@ -53,11 +53,11 @@ const FormField = ({
             <div className="mt-2">
               <select
                 name={field.name}
-                value={data[field.name]}
+                value={data[field.name] || ""}
                 onChange={onChange}
                 onBlur={onBlur}
                 required={field.validation?.required}
-                className="box-border block w-full rounded-md border-0 py-2.5 px-0.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600"
+                className="box-border block w-full rounded-md border-0 py-2.5 px-0.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 bg-white"
               >
                 <option value="">Select {field.label}</option>
                 {Array.isArray(field.options) &&
@@ -67,12 +67,11 @@ const FormField = ({
                       {option}
                     </option>
                   ))}
-                {/* Explain later */}
                 {typeof field.options === "object" &&
                   field.visibilityConditions &&
                   (
                     field.options[
-                      data[Object.keys(field.visibilityConditions)[0]]
+                      data[Object.keys(field.visibilityConditions)[0]] // find value stored in data state to match option key
                     ] as string[]
                   )?.map((option) => (
                     <option key={option} value={option}>
