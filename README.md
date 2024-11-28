@@ -17,7 +17,7 @@ This project is a Developer Challenge solution in a React app using Tailwind CSS
 
 ## JSON schema
 
-To test different scenarios, modify the JSON file located in `src/utils/schema.json`.
+To test different scenarios, modify the JSON file located in `src/utils/schema.json`
 
 ## Installation
 
