@@ -6,7 +6,7 @@ This project is a Developer Challenge solution in a React app using Tailwind CSS
 
 ## Features
 
-- **Dynamic Form Generation**: Renders form fields dynamically based on a JSON schema. Each field is configured by its type, label, placeholder, and options (for select fields).
+- **Dynamic Form Generation**: Renders form fields dynamically based on a JSON schema. Each field is configured by its `name`, `type`, `label` and optional attributes like `placeholder`, `validation`, `options` (for select fields).
 - **Dependent Fields**: Shows certain fields based on the values of others, as per a `visibilityConditions` property in the JSON schema.
 - **Validation**: Enforces field-specific validation rules, displaying errors when input does not meet criteria such as `required`, `minLength`, `maxLength`, or `pattern`.
 - **State Persistence**: Saves form data to `localStorage` on each update. On page load, the saved form state is restored.
@@ -14,6 +14,10 @@ This project is a Developer Challenge solution in a React app using Tailwind CSS
   - **Clear Form**: Resets the form to its initial state and clears `localStorage`.
   - **Restore Saved State**: Reloads the form from the last saved state in `localStorage`.
 - **Live JSON Preview**: Displays a live preview of the current form state as JSON, updating with user interactions.
+
+## JSON schema
+
+To test different scenarios, modify the JSON file located in `src/utils/schema.json`.
 
 ## Installation
 

@@ -1,45 +1,30 @@
-import { FormEvent, useEffect, useState } from "react";
+import { FormEvent, useEffect, useState, ChangeEvent } from "react";
 import schema from "../utils/schema.json";
 import { FormSchema } from "../types/schemaTypes";
 import { DynamicFormProps, FormData } from "../types/types";
 import Button from "./Button";
 import FormField from "./FormField";
 
-const DynamicForm = ({
-  name,
-  setName,
-  age,
-  setAge,
-  selectedCountry,
-  setSelectedCountry,
-  selectedCity,
-  setSelectedCity,
-}: DynamicFormProps) => {
+const DynamicForm = ({ data, setData }: DynamicFormProps) => {
   const formSchema = schema as FormSchema;
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [savedData, setSavedData] = useState<FormData | null>(null);
 
-  // Retrieve input data from localStorage
+  // retrieve input data from localStorage
   useEffect(() => {
     const storedData = localStorage.getItem("formData");
     if (storedData) {
       const localStorageData = JSON.parse(storedData);
-      if (localStorageData.name) setName(localStorageData.name);
-      if (localStorageData.age) setAge(localStorageData.age);
-      if (localStorageData.selectedCountry)
-        setSelectedCountry(localStorageData.selectedCountry);
-      if (localStorageData.selectedCity)
-        setSelectedCity(localStorageData.selectedCity);
+      setData(localStorageData);
     }
   }, []);
 
-  // Update localStorage on every input change
+  // update localStorage on every input change
   useEffect(() => {
-    const formData = { name, age, selectedCountry, selectedCity };
-    localStorage.setItem("formData", JSON.stringify(formData));
-  }, [name, age, selectedCountry, selectedCity]);
+    localStorage.setItem("formData", JSON.stringify(data));
+  }, [data]);
 
-  // Function to validate individual fields and provide error messages
+  // function to validate individual fields and provide error messages
   const validateField = (name: string, value: string) => {
     const field = formSchema.fields.find((f) => f.name === name);
     if (!field) return;
@@ -96,7 +81,7 @@ const DynamicForm = ({
     }));
   };
 
-  const handleFormClear = (e: FormEvent) => {
+  const clearForm = (e: FormEvent) => {
     e.preventDefault();
 
     // Save current data to be able to restore it
@@ -104,72 +89,75 @@ const DynamicForm = ({
       localStorage.getItem("formData") || "{}"
     );
     setSavedData(savedLocalStorageData);
-    console.log("savedData", savedLocalStorageData);
+    console.log("Saved Data", savedLocalStorageData);
 
-    setName("");
-    setAge("");
-    setSelectedCountry("");
-    setSelectedCity("");
-
+    setData({});
     setErrors({});
   };
 
-  const handleRestoreData = (e: FormEvent) => {
+  const restoreData = (e: FormEvent) => {
     e.preventDefault();
 
     if (savedData) {
-      setName(savedData.name);
-      setAge(savedData.age);
-      setSelectedCountry(savedData.selectedCountry);
-      setSelectedCity(savedData.selectedCity);
+      setData(savedData);
     }
-
     setErrors({});
   };
 
+  const handleOnChange = (
+    e: ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setData((prevData: any) => {
+      const updatedData = {
+        ...prevData,
+        [name]: value,
+      };
+
+      // reset dependent fields if a parent field changes
+      formSchema.fields.forEach((field) => {
+        if (
+          field.visibilityConditions &&
+          Object.keys(field.visibilityConditions).includes(name)
+        ) {
+          updatedData[field.name] = ""; // reset the dependent field
+        }
+      });
+
+      return updatedData;
+    });
+  };
+
   return (
-    <div className=" min-h-min h-1/2 flex flex-col justify-center items-center">
+    <div className="flex flex-col justify-center items-center pb-8">
       <form>
         <div className="pb-12">
           {formSchema &&
             formSchema.fields.length > 0 &&
-            formSchema.fields.map((field) => (
-              <div key={field.name}>
-                <FormField
-                  field={field}
-                  name={name}
-                  age={age}
-                  selectedCountry={selectedCountry}
-                  selectedCity={selectedCity}
-                  onChange={(e) => {
-                    if (field.name === "name") setName(e.target.value);
-                    if (field.name === "age") setAge(e.target.value);
-                    if (field.name === "country")
-                      setSelectedCountry(e.target.value);
-                    if (field.name === "city") setSelectedCity(e.target.value);
-                  }}
-                  onBlur={() =>
-                    validateField(
-                      field.name,
-                      field.name === "country"
-                        ? selectedCountry
-                        : field.name === "city"
-                        ? selectedCity
-                        : field.name === "name"
-                        ? name
-                        : field.name === "age"
-                        ? age
-                        : ""
-                    )
-                  }
-                  error={errors[field.name] || ""}
-                />
-              </div>
-            ))}
+            formSchema.fields.map((field) => {
+              const isVisible =
+                !field.visibilityConditions || // always visible if no conditions
+                Object.keys(field.visibilityConditions).every(
+                  (
+                    key // visible if associated option was selected previously
+                  ) => field.visibilityConditions![key].includes(data[key])
+                );
+              return isVisible ? (
+                <div key={field.name}>
+                  <FormField
+                    field={field}
+                    onChange={(e) => handleOnChange(e)}
+                    onBlur={() => validateField(field.name, data[field.name])}
+                    data={data}
+                    error={errors[field.name] || ""}
+                  />
+                </div>
+              ) : null;
+            })}
         </div>
         <div className="pb-6 flex items-center justify-between gap-x-6">
-          <Button title="Clear Form" handleClick={handleFormClear} />
-          <Button title="Restore Saved State" handleClick={handleRestoreData} />
+          <Button title="Clear Form" handleClick={clearForm} />
+          <Button title="Restore Saved State" handleClick={restoreData} />
         </div>
       </form>
     </div>

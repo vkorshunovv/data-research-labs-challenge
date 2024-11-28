@@ -1,15 +1,10 @@
 import { JSONPreviewProps } from "../types/types";
 
-const JSONPreview = ({
-  age,
-  name,
-  selectedCountry,
-  selectedCity,
-}: JSONPreviewProps) => {
-  const dataObject = { name, age, selectedCountry, selectedCity };
+const JSONPreview = ({ data }: JSONPreviewProps) => {
   return (
-    <div className="bg-slate-100 min-h-min h-1/2 flex flex-col justify-center items-center px-4">
-      <pre>{JSON.stringify(dataObject, null, 2)}</pre>
+    //TODO set fixed list order
+    <div className="w-full flex flex-col justify-center items-center p-4 border-t">
+      <pre>{JSON.stringify(data, null, 2)}</pre>
     </div>
   );
 };
