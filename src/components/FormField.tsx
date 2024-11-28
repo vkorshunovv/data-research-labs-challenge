@@ -1,6 +1,12 @@
 import { FormFieldProps } from "../types/types";
 
-const FormField = ({ field, onChange, onBlur, error, data }: any) => {
+const FormField = ({
+  field,
+  onChange,
+  onBlur,
+  error,
+  data,
+}: FormFieldProps) => {
   return (
     <div className="flex flex-col gap-y-2">
       {/* TEXT || NUMBER */}

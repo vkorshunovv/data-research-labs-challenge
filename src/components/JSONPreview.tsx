@@ -1,6 +1,6 @@
 import { JSONPreviewProps } from "../types/types";
 
-const JSONPreview = ({ data }: any) => {
+const JSONPreview = ({ data }: JSONPreviewProps) => {
   return (
     //TODO set fixed list order
     <div className="bg-slate-100 min-h-min h-1/2 flex flex-col justify-center items-center px-4">

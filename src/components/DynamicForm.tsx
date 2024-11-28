@@ -5,14 +5,7 @@ import { DynamicFormProps, FormData } from "../types/types";
 import Button from "./Button";
 import FormField from "./FormField";
 
-const DynamicForm = ({
-  setName,
-  setAge,
-  setSelectedCountry,
-  setSelectedCity,
-  data,
-  setData,
-}: any) => {
+const DynamicForm = ({ data, setData }: DynamicFormProps) => {
   const formSchema = schema as FormSchema;
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [savedData, setSavedData] = useState<FormData | null>(null);
@@ -23,7 +16,6 @@ const DynamicForm = ({
     if (storedData) {
       const localStorageData = JSON.parse(storedData);
       setData(localStorageData);
-      console.log("Local data", localStorageData);
     }
   }, []);
 
@@ -89,7 +81,7 @@ const DynamicForm = ({
     }));
   };
 
-  const handleFormClear = (e: FormEvent) => {
+  const clearForm = (e: FormEvent) => {
     e.preventDefault();
 
     // Save current data to be able to restore it
@@ -97,26 +89,18 @@ const DynamicForm = ({
       localStorage.getItem("formData") || "{}"
     );
     setSavedData(savedLocalStorageData);
-    console.log("savedData", savedLocalStorageData);
+    console.log("Saved Data", savedLocalStorageData);
 
-    setName("");
-    setAge("");
-    setSelectedCountry("");
-    setSelectedCity("");
-
+    setData({});
     setErrors({});
   };
 
-  const handleRestoreData = (e: FormEvent) => {
+  const restoreData = (e: FormEvent) => {
     e.preventDefault();
 
     if (savedData) {
-      setName(savedData.name);
-      setAge(savedData.age);
-      setSelectedCountry(savedData.selectedCountry);
-      setSelectedCity(savedData.selectedCity);
+      setData(savedData);
     }
-
     setErrors({});
   };
 
@@ -143,10 +127,10 @@ const DynamicForm = ({
               </div>
             ))}
         </div>
-        {/* <div className="pb-6 flex items-center justify-between gap-x-6">
-          <Button title="Clear Form" handleClick={handleFormClear} />
-          <Button title="Restore Saved State" handleClick={handleRestoreData} />
-        </div> */}
+        <div className="pb-6 flex items-center justify-between gap-x-6">
+          <Button title="Clear Form" handleClick={clearForm} />
+          <Button title="Restore Saved State" handleClick={restoreData} />
+        </div>
       </form>
     </div>
   );
