@@ -110,22 +110,29 @@ const DynamicForm = ({ data, setData }: DynamicFormProps) => {
         <div className="pb-12">
           {formSchema &&
             formSchema.fields.length > 0 &&
-            formSchema.fields.map((field) => (
-              <div key={field.name}>
-                <FormField
-                  field={field}
-                  onChange={(e: any) => {
-                    setData((prevData: any) => ({
-                      ...prevData,
-                      [field.name]: e.target.value,
-                    }));
-                  }}
-                  onBlur={() => validateField(field.name, data[field.name])}
-                  data={data}
-                  error={errors[field.name] || ""}
-                />
-              </div>
-            ))}
+            formSchema.fields.map((field) => {
+              const isVisible =
+                !field.visibilityConditions || // always visible if no conditions
+                Object.keys(field.visibilityConditions).every((key) => // visible if associated option was selected previously
+                  field.visibilityConditions![key].includes(data[key])
+                );
+              return isVisible ? (
+                <div key={field.name}>
+                  <FormField
+                    field={field}
+                    onChange={(e: any) => {
+                      setData((prevData: any) => ({
+                        ...prevData,
+                        [field.name]: e.target.value,
+                      }));
+                    }}
+                    onBlur={() => validateField(field.name, data[field.name])}
+                    data={data}
+                    error={errors[field.name] || ""}
+                  />
+                </div>
+              ) : null;
+            })}
         </div>
         <div className="pb-6 flex items-center justify-between gap-x-6">
           <Button title="Clear Form" handleClick={clearForm} />
